@@ -1,0 +1,18 @@
+# Python virtual environment folder
+# This is project-specific and should not be in source control.
+venv/
+
+# Python cache files
+# These are auto-generated and can be rebuilt.
+__pycache__/
+*.pyc
+
+# Generated data, log, and report files
+# The repository should contain the code to generate these, not the files themselves.
+*.log
+*.csv
+*.json
+
+# VS Code editor-specific settings
+# These are user-specific and do not belong in a shared repository.
+.vscode/
