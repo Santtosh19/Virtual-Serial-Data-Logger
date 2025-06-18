@@ -24,51 +24,7 @@ This project was built to showcase a deep understanding of the following profess
 *   **Availability Monitoring:** The system implements **heartbeat detection** to monitor the data source's availability. A loss of signal is treated as a critical incident, reflecting a focus on uptime as a primary metric.
 *   **Structured, Actionable Alerting:** The final output is a `JSON` report (`anomaly_report.json`), not just a simple text log. This demonstrates an understanding of how monitoring systems integrate into a larger, automated **DevOps toolchain** (e.g., PagerDuty, Jira, Grafana).
 
----
 
-## 🏗️ System Architecture & Data Flow
-
-The project operates as a linear pipeline, where data is progressively refined and analyzed at each stage.
-+------------------+ (Multi-state data stream) +-------------------+
-| Python Device | ----------------------------------------->| Virtual Port 1 |
-| Emulator Script | "T:85.5,V:5.0,S:WARNING_TEMP..." | (COM5) |
-| (emulator.py) | +-------------------+
-+------------------+ ^
-|
-VIRTUAL "CABLE"
-(Created by Eltima VSPD
-or com0com)
-|
-v
-+-----------------------------+ (Listens in real-time, +-------------------+
-| Real-time Logger & | validates, & parses) | Virtual Port 2 |
-| Parser Service (Python) | <---------------------------------+ (COM6) |
-| (logger_service.py) | +-------------------+
-+-----------------------------+
-| |
-| (Immutable Audit Trail) | (Analytics-Ready Data)
-v v
-+------------+ +-------------------------+ +----------------------+
-| Raw Log | | Structured Metrics File | | Parser Error Log |
-| (raw.log) | | (structured_metrics.csv)| | (parser_errors.log) |
-+------------+ +-------------------------+ +----------------------+
-^
-|
-| (Analyzes entire dataset for trends and events)
-|
-+---------------------------------+
-| Python Reliability |
-| Anomaly Detection Engine |
-| (detector.py) |
-+---------------------------------+
-|
-| (Generates a machine-readable incident report)
-v
-+-----------------------------+
-| JSON Anomaly Report |
-| (anomaly_report.json) |
-+-----------------------------+
----
 ## 📈 Example Results & Anomaly Detection in Action
 
 After running the system with a "forced failure" sequence, the detection engine produces the following detailed `anomaly_report.json`:
@@ -100,6 +56,7 @@ After running the system with a "forced failure" sequence, the detection engine 
         "description": "No data received for 5.0 seconds. Device may be offline."
     }
 ]
+```
 
 # 🛠️ Technical Deep Dive & Setup
 
@@ -129,33 +86,36 @@ Clone this repository to your local machine:
 ```bash
 git clone https://github.com/YourUsername/Your-Repo-Name.git
 cd Your-Repo-Name
-
+```
 
 3. Set Up Virtual Environment
 It is critical to use a virtual environment to manage dependencies and avoid conflicts.
 
 # Create the virtual environment folder named 'venv'
+```
 python -m venv venv
-
+```
 # Activate the environment
+```
 .\venv\Scripts\activate
-
+```
 4. Install Dependencies
 Install all required packages from the requirements.txt file:
-
+```
 pip install -r requirements.txt
-
+```
 Running the Full Pipeline
 You will need at least two terminals, both with the virtual environment (venv) activated.
 
 1. Terminal 1: Start the Device Emulator
-This script will start broadcasting data immediately: python emulator.py
+This script will start broadcasting data immediately:
+``` python emulator.py```
 
-2. Terminal 2: Start the Logging Service
-This service will listen for the data, create the log files, and process data as it arrives: python logger_service.py
+3. Terminal 2: Start the Logging Service
+This service will listen for the data, create the log files, and process data as it arrives:``` python logger_service.py```
 
-3. Terminal 3 (or reuse one): Run the Analysis
-Execute the detection engine on the collected data: python detector.py
+4. Terminal 3 (or reuse one): Run the Analysis
+Execute the detection engine on the collected data:``` python detector.py```
 
 This final step reads structured_metrics.csv and generates anomaly_report.json if anomalies are found.
 
