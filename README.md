@@ -125,7 +125,7 @@ Allow the scripts to run for 60-120 seconds to accumulate a meaningful dataset. 
 5. Stop the Services
 Press Ctrl+C in both terminals to stop the scripts gracefully.
 
-##🔮 Future Improvements & Potential Extensions
+## 🔮 Future Improvements & Potential Extensions
 This project provides a solid foundation that could be extended in many professional directions:
 
 Database Integration: Replace the CSV file storage with a time-series database like InfluxDB or Prometheus for more efficient querying and data retention.
